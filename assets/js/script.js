@@ -224,18 +224,23 @@ $(".card .list-group").sortable({
   scroll: false,
   tolerance: "pointer",
   helper: "clone",
+
   activate: function(event) {
-    console.log("activate", this);
+    $(".dropover").addClass(this);
   },
+
   deactivate: function(event) {
-    console.log("deactivate", this);
+   $(".dropover").remove(this);
   },
+
   over: function(event) {
-    console.log("over", event.target);
+    $(event.target).addClass(".dropover-active");
   },
+
   out: function(event) {
-    console.log("out", event.target);
+    $(event.target).remove(".dropover-active");
   },
+
   update: function(event) {
     // array to store the task data in
     var tempArr = [];
@@ -284,3 +289,20 @@ $("#trash").droppable({
     console.log("out");
   }
 });
+
+setInterval(function(){
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  });
+  // code to execute
+}, (1000 * 60) * 30); // every thirty minutes.
+
+// as a reminder: setTimout will only work once; setInterval will occur again as directed.
+// setTimeout(function() {
+//   alert("This message happens after 5 seconds!");
+// }, 5000);
+
+// this will occur every five seconds
+// setInterval(function() {
+//   alert("This alert shows up every five seconds!");
+//   }, 5000);
